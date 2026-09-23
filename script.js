@@ -102,6 +102,7 @@ function renderNav() {
             e.stopPropagation();
             entries = entries.filter(en => en.id !== entry.id);
             saveEntriesToStorage();
+            console.log("currentEditId:", currentEditId, "| entry.id:", entry.id);
             if (currentEditId === entry.id) resetForm();
             renderNav();
         });
@@ -120,7 +121,7 @@ function loadEntry(id) {
     const entry = entries.find(en => en.id === id);
     if (!entry) return;
 
-    currenteditId = id;
+    currentEditId = id;
     titleInput.value = entry.title || "";
     weatherSelect.value = entry.weather || "☀️";
     diaryText.value = entry.text || "";
@@ -138,7 +139,7 @@ function loadEntry(id) {
 function resetForm() {
     currentEditId = null;
     titleInput.value = "";
-    weatherSelect.value ="☀️";
+    weatherSelect.value ="";
     diaryText.value = "";
     emojiButtons.forEach(b => b.classList.remove("selected"));
     selectedEmoji = null;
@@ -190,6 +191,9 @@ function saveEntry () {
     resetForm();
 }
 
+saveBtn.addEventListener("click", saveEntry);
+
+renderNav();
 saveBtn.addEventListener("click", saveEntry);
 
 renderNav();
